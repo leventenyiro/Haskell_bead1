@@ -1,5 +1,7 @@
 module Bead where
 
+import Data.List
+
 type Dictionary = [(Char, Integer)]
 
 dictionary :: [Char] -> Dictionary
@@ -46,7 +48,6 @@ primeList :: [Integer]
 primeList = 2:[ x | x <- [3,5..], isPrime x]
 
 -- 4. feladat abba >> 2^1 * 3^2 * 5^2 * 7^1
-
 encode :: Dictionary -> String -> Integer
 encode dict str
     | result == [] = 1
@@ -56,7 +57,6 @@ encode dict str
         powTuple (a,b) = a ^ b
 
 -- 5. feladat - prímfaktorizáció
-
 primeFactorization :: Integer -> [Integer]
 primeFactorization a 
     | a <= 1 = []
@@ -66,3 +66,12 @@ primeFactorization a
         factor = take 1 [p | p <- [2..a-1], a `mod` p == 0]
 
 -- 6. feladat - dekódolás
+decode :: Dictionary -> Integer -> String
+decode dict n = [numToChar dict y | y <- [toInteger (length x) | x <- group (primeFactorization n)]]
+
+--[y | y <- [genericLength x | x <- group (primeFactorization 3150)]]
+
+--[toInteger (length x) | x <- [[2],[3,3]]]
+
+--[numToChar dictionary_az y | y <- [toInteger (length x) | x <- [[2],[3,3]]]]
+--[numToChar dictionary_az y | y <- [toInteger (length x) | x <- group (primeFactorization 3150)]]
