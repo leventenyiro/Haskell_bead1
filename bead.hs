@@ -49,4 +49,14 @@ isPrime n = odd n && null [d | d <- [3,5..squareRoot n], n `mod` d == 0] where
 primeList :: [Integer]
 primeList = 2:[ x | x <- [3,5..], isPrime x]
 
--- 4. feladat
+-- 4. feladat abba >> 2^1 * 3^2 * 5^2 * 7^1
+
+encode :: Dictionary -> String -> Integer
+encode dict str
+    | result == [] = 1
+    | otherwise = product [powTuple x | x <- result]
+    where
+        result = zip primeList (translate [x | x <- dict] str)
+        powTuple (a,b) = a ^ b
+
+-- 5. feladat
