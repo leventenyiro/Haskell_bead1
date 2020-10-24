@@ -36,6 +36,7 @@ translate dict str
     | otherwise = result
     where result = [charToNum dict y | y <- [x | x <- str]]
 
+-- 4. feladat
 isPrime :: Integer -> Bool
 isPrime 0 = False
 isPrime 1 = False
@@ -47,7 +48,6 @@ isPrime n = odd n && null [d | d <- [3,5..squareRoot n], n `mod` d == 0] where
 primeList :: [Integer]
 primeList = 2:[ x | x <- [3,5..], isPrime x]
 
--- 4. feladat abba >> 2^1 * 3^2 * 5^2 * 7^1
 encode :: Dictionary -> String -> Integer
 encode dict str
     | result == [] = 1
@@ -56,7 +56,7 @@ encode dict str
         result = zip primeList (translate [x | x <- dict] str)
         powTuple (a,b) = a ^ b
 
--- 5. feladat - prímfaktorizáció
+-- 5. feladat
 primeFactorization :: Integer -> [Integer]
 primeFactorization a 
     | a <= 1 = []
@@ -65,13 +65,6 @@ primeFactorization a
     where 
         factor = take 1 [p | p <- [2..a-1], a `mod` p == 0]
 
--- 6. feladat - dekódolás
+-- 6. feladat
 decode :: Dictionary -> Integer -> String
 decode dict n = [numToChar dict y | y <- [toInteger (length x) | x <- group (primeFactorization n)]]
-
---[y | y <- [genericLength x | x <- group (primeFactorization 3150)]]
-
---[toInteger (length x) | x <- [[2],[3,3]]]
-
---[numToChar dictionary_az y | y <- [toInteger (length x) | x <- [[2],[3,3]]]]
---[numToChar dictionary_az y | y <- [toInteger (length x) | x <- group (primeFactorization 3150)]]
