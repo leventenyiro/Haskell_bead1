@@ -34,10 +34,6 @@ translate dict str
     | otherwise = result
     where result = [charToNum dict y | y <- [x | x <- str]]
 
--- Prímek
-isPrime2 :: Integer -> Bool
-isPrime2 n = length [x | x <- [1..n], n `mod` x == 0] == 2
-
 isPrime :: Integer -> Bool
 isPrime 0 = False
 isPrime 1 = False
@@ -59,4 +55,14 @@ encode dict str
         result = zip primeList (translate [x | x <- dict] str)
         powTuple (a,b) = a ^ b
 
--- 5. feladat
+-- 5. feladat - prímfaktorizáció
+
+primeFactorization :: Integer -> [Integer]
+primeFactorization a 
+    | a <= 1 = []
+    | factor == [] = [a]
+    | otherwise = factor ++ primeFactorization (a `div` (head factor))
+    where 
+        factor = take 1 [p | p <- [2..a-1], a `mod` p == 0]
+
+-- 6. feladat - dekódolás
